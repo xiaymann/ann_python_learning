@@ -16,12 +16,13 @@ x = torch.rand(20, 1) * 10  # x data (tensor), shape=(20, 1)
 y = 2*x + (5 + torch.randn(20, 1))  # y data (tensor), shape=(20, 1)
 
 # 构建线性回归参数
+# 初始化w和b
 w = torch.randn((1), requires_grad=True)
 b = torch.zeros((1), requires_grad=True)
 
 for iteration in range(1000):
 
-    # 前向传播
+    # 前向传播，mul乘
     wx = torch.mul(w, x)
     y_pred = torch.add(wx, b)
 
@@ -31,7 +32,7 @@ for iteration in range(1000):
     # 反向传播
     loss.backward()
 
-    # 更新参数
+    # 更新参数，sub减
     b.data.sub_(lr * b.grad)
     w.data.sub_(lr * w.grad)
 
@@ -48,7 +49,7 @@ for iteration in range(1000):
         plt.xlim(1.5, 10)
         plt.ylim(8, 28)
         plt.title("Iteration: {}\nw: {} b: {}".format(iteration, w.data.numpy(), b.data.numpy()))
-        plt.pause(0.5)
+        plt.pause(5)
 
-        if loss.data.numpy() < 1:
+        if loss.data.numpy() < 1:    # 当loss<1就停止迭代的更新
             break
